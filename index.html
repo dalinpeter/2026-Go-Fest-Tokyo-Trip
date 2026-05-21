@@ -6,16 +6,19 @@
 <title>東京抓寶大冒險 - 互動行程</title>
 <style>
   :root {
-    --bg: #f7f4ee;
+    --bg: #f5f0e8;
     --surface: #ffffff;
-    --ink: #27313f;
-    --muted: #667085;
-    --line: #e5dfd5;
-    --red: #d94444;
-    --blue: #2d6cdf;
-    --green: #248a57;
-    --amber: #b26a00;
-    --shadow: 0 14px 40px rgba(39, 49, 63, 0.11);
+    --surface-warm: #fffaf1;
+    --ink: #1f2a35;
+    --muted: #68717d;
+    --line: #ded4c7;
+    --red: #d9473f;
+    --blue: #2f6f9f;
+    --green: #2d7d62;
+    --amber: #b66b1b;
+    --night: #243142;
+    --shadow: 0 18px 42px rgba(42, 34, 26, 0.12);
+    --soft-shadow: 0 10px 24px rgba(42, 34, 26, 0.08);
   }
 
   * {
@@ -38,11 +41,15 @@
   .app {
     width: min(1120px, 100%);
     margin: 0 auto;
-    padding: 18px;
+    padding: 22px 18px 18px;
   }
 
   .hero {
-    padding: 24px 0 18px;
+    display: grid;
+    gap: 10px;
+    justify-items: center;
+    padding: 20px 0 18px;
+    text-align: center;
   }
 
   .eyebrow {
@@ -54,9 +61,20 @@
 
   h1 {
     margin: 0;
-    font-size: clamp(2rem, 6vw, 4.2rem);
+    font-size: clamp(2.15rem, 6vw, 4.35rem);
     line-height: 1.08;
     letter-spacing: 0;
+  }
+
+  .logo-title {
+    width: min(100%, 980px);
+  }
+
+  .site-logo {
+    display: block;
+    width: min(100%, 940px);
+    height: auto;
+    margin: 0 auto;
   }
 
   .subtitle {
@@ -68,11 +86,14 @@
 
   .map-container {
     position: relative;
-    height: clamp(280px, 52vw, 520px);
+    height: clamp(300px, 46vw, 500px);
     overflow: hidden;
     border: 1px solid var(--line);
-    border-radius: 8px;
-    background: #dde7ef;
+    border-radius: 10px;
+    background:
+      linear-gradient(0deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.72)),
+      linear-gradient(135deg, rgba(36, 49, 66, 0.88), rgba(47, 111, 159, 0.7)),
+      #dde7ef;
     box-shadow: var(--shadow);
   }
 
@@ -84,14 +105,55 @@
     border: 0;
   }
 
+  .map-info {
+    position: absolute;
+    left: 18px;
+    bottom: 18px;
+    z-index: 1;
+    width: min(430px, calc(100% - 36px));
+    border: 1px solid rgba(255, 255, 255, 0.26);
+    border-radius: 10px;
+    background: rgba(31, 42, 53, 0.88);
+    color: #fff;
+    padding: 14px;
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(12px);
+  }
+
+  .map-info strong {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 1.02rem;
+  }
+
+  .map-info span {
+    display: block;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.9rem;
+  }
+
+  .map-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--night);
+    padding: 7px 11px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
   .toolbar {
     position: sticky;
     top: 0;
     z-index: 3;
     margin: 16px -18px 0;
-    padding: 10px 18px;
-    background: rgba(247, 244, 238, 0.94);
-    border-bottom: 1px solid rgba(229, 223, 213, 0.8);
+    padding: 12px 18px;
+    background: rgba(245, 240, 232, 0.94);
+    border-bottom: 1px solid rgba(222, 212, 199, 0.85);
     backdrop-filter: blur(10px);
   }
 
@@ -101,18 +163,25 @@
     gap: 8px;
     overflow-x: auto;
     padding-bottom: 2px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .tabs::-webkit-scrollbar {
+    display: none;
   }
 
   .tab {
     min-height: 56px;
     border: 1px solid var(--line);
-    border-radius: 8px;
-    background: var(--surface);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.82);
     color: var(--ink);
     cursor: pointer;
     text-align: left;
-    padding: 9px 10px;
+    padding: 10px 11px;
     white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(42, 34, 26, 0.05);
   }
 
   .tab strong,
@@ -126,9 +195,14 @@
   }
 
   .tab.active {
-    border-color: var(--blue);
-    background: #edf4ff;
-    color: #174ea6;
+    border-color: rgba(217, 71, 63, 0.45);
+    background: var(--night);
+    color: #fff;
+    box-shadow: 0 10px 22px rgba(36, 49, 66, 0.18);
+  }
+
+  .tab.active span {
+    color: rgba(255, 255, 255, 0.74);
   }
 
   .day-panel {
@@ -141,11 +215,9 @@
   }
 
   .day-header {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 14px;
-    align-items: end;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 14px;
   }
 
   .day-title {
@@ -158,35 +230,22 @@
     color: var(--muted);
   }
 
-  .progress {
-    min-width: 130px;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background: var(--surface);
-    padding: 10px 12px;
-    text-align: center;
-  }
-
-  .progress strong {
-    display: block;
-    font-size: 1.25rem;
-  }
-
   .cards {
     display: grid;
-    gap: 12px;
+    gap: 14px;
   }
 
   .stop-card {
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: 10px;
     background: var(--surface);
-    box-shadow: 0 8px 24px rgba(39, 49, 63, 0.06);
+    box-shadow: var(--soft-shadow);
+    overflow: hidden;
   }
 
   .stop-summary {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 1fr auto;
     gap: 12px;
     align-items: center;
     width: 100%;
@@ -194,30 +253,14 @@
     background: transparent;
     color: inherit;
     cursor: pointer;
-    padding: 14px;
+    padding: 16px;
     text-align: left;
-  }
-
-  .check {
-    display: grid;
-    place-items: center;
-    width: 32px;
-    height: 32px;
-    border: 2px solid #bac5d4;
-    border-radius: 50%;
-    color: transparent;
-    font-weight: 800;
-  }
-
-  .stop-card.done .check {
-    border-color: var(--green);
-    background: var(--green);
-    color: #fff;
   }
 
   .stop-main strong {
     display: block;
-    font-size: 1.05rem;
+    font-size: 1.08rem;
+    line-height: 1.42;
   }
 
   .stop-main span {
@@ -230,7 +273,7 @@
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    background: #f2efe8;
+    background: #f2eee5;
     display: grid;
     place-items: center;
     color: var(--muted);
@@ -243,7 +286,8 @@
   .details {
     display: none;
     border-top: 1px solid var(--line);
-    padding: 0 14px 14px 58px;
+    background: #fffdf8;
+    padding: 0 16px 16px;
   }
 
   .stop-card.open .details {
@@ -259,9 +303,10 @@
 
   .detail-box {
     min-width: 0;
-    border-radius: 8px;
-    background: #fbfaf7;
-    padding: 10px;
+    border: 1px solid rgba(222, 212, 199, 0.8);
+    border-radius: 10px;
+    background: #fff;
+    padding: 11px;
   }
 
   .detail-box b {
@@ -280,9 +325,9 @@
 
   .tag {
     border-radius: 999px;
-    background: #edf4ff;
-    color: #174ea6;
-    padding: 3px 9px;
+    background: #eaf3f7;
+    color: #225f87;
+    padding: 4px 10px;
     font-size: 0.82rem;
     font-weight: 700;
   }
@@ -303,29 +348,8 @@
     display: block;
     margin-top: 12px;
     border: 1px solid var(--line);
-    border-radius: 8px;
-  }
-
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    padding: 0 0 28px;
-  }
-
-  .action-btn {
-    border: 0;
-    border-radius: 8px;
-    background: var(--green);
-    color: #fff;
-    cursor: pointer;
-    padding: 12px 18px;
-    font-weight: 700;
-  }
-
-  .action-btn.secondary {
-    background: #2f3b4a;
+    border-radius: 10px;
+    box-shadow: var(--soft-shadow);
   }
 
   @media (max-width: 760px) {
@@ -338,6 +362,18 @@
       padding-inline: 14px;
     }
 
+    .map-container {
+      height: 340px;
+    }
+
+    .map-info {
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      width: auto;
+      padding: 12px;
+    }
+
     .tabs {
       display: flex;
     }
@@ -346,25 +382,21 @@
       flex: 0 0 136px;
     }
 
-    .day-header {
-      grid-template-columns: 1fr;
-    }
-
-    .progress {
-      text-align: left;
-    }
-
     .detail-grid {
       grid-template-columns: 1fr;
     }
 
     .details {
-      padding-left: 14px;
+      padding: 0 12px 14px;
     }
 
     .stop-summary {
-      grid-template-columns: auto 1fr auto;
-      padding: 13px 12px;
+      grid-template-columns: 1fr auto;
+      padding: 14px 12px;
+    }
+
+    .stop-main strong {
+      font-size: 1rem;
     }
   }
 
@@ -379,7 +411,7 @@
     }
 
     .toolbar,
-    .actions {
+    .map-info {
       display: none;
     }
 
@@ -402,13 +434,18 @@
 <body>
 <main class="app">
   <section class="hero" aria-labelledby="page-title">
-    <p class="eyebrow">Tokyo 5/27 - 6/1</p>
-    <h1 id="page-title">東京抓寶冒險行程</h1>
-    <p class="subtitle">每天切換查看，點開景點看交通、備註與任務。勾選完成後會自動記在這台瀏覽器裡。</p>
+    <h1 id="page-title" class="logo-title">
+      <img src="logo.png" alt="Yuki東京抓寶行" class="site-logo">
+    </h1>
   </section>
 
   <section class="map-container" aria-label="東京行程 Google 地圖">
     <iframe src="https://www.google.com/maps/d/embed?mid=1ik7Komsxgbv7MEo5wMqLOsnfAtaR53k&ehbc=2E312F" allowfullscreen loading="lazy"></iframe>
+    <div class="map-info">
+      <strong>東京行程地圖</strong>
+      <span>如果地圖載入較慢，仍可先閱讀下方每日卡片；需要完整操作時可開啟 Google 地圖。</span>
+      <a class="map-link" href="https://www.google.com/maps/d/viewer?mid=1ik7Komsxgbv7MEo5wMqLOsnfAtaR53k" target="_blank" rel="noopener">開啟 Google 地圖</a>
+    </div>
   </section>
 
   <nav class="toolbar" aria-label="日期切換">
@@ -425,15 +462,13 @@
   <section class="day-panel active" id="day-0527" data-day-panel>
     <div class="day-header">
       <div>
-        <h2 class="day-title">5/27 抵達東京：成田到錦糸町</h2>
+        <h2 class="day-title">5/27 成田到錦糸町</h2>
         <p class="day-note">主軸：直達錦糸町、入住、晚餐，晚上逛逛車站商圈。</p>
       </div>
-      <div class="progress" data-progress>0 / 7 完成</div>
     </div>
     <div class="cards">
       <article class="stop-card" data-stop="0527-arrive">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>16:35 CI104 抵達成田 T2</strong><span>第一件事：穩穩入境，不急著衝車</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -449,7 +484,6 @@
 
       <article class="stop-card" data-stop="0527-entry">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>17:35 - 18:05 預估完成入境、領行李</strong><span>保留約 1 小時緩衝</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -465,7 +499,6 @@
 
       <article class="stop-card" data-stop="0527-shuttle">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>18:15 搭 SKYTREE Shuttle 往錦糸町</strong><span>成田 T2 出發</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -473,15 +506,15 @@
           <div class="detail-grid">
             <div class="detail-box"><b>重點</b>以直達錦糸町為優先，減少第一天拖行李轉乘壓力。</div>
             <div class="detail-box"><b>交通</b>搭 SKYTREE Shuttle，目標直達錦糸町區域。</div>
-            <div class="detail-box"><b>提醒</b>上車前先確認班次、站牌、下車點和車票付款方式。</div>
+            <div class="detail-box"><b>備案判斷</b>如果出關超過 18:10，就不要硬趕 18:15 SKYTREE Shuttle。</div>
+            <div class="detail-box"><b>替代交通</b>1. 改搭 JR／京成電車，依現場班次選擇。<br>2. 現場確認是否有利木津巴士到 Tobu Hotel Levant Tokyo 或錦糸町區域。</div>
           </div>
-          <div class="tag-row"><span class="tag">直達優先</span><span class="tag">巴士</span></div>
+          <div class="tag-row"><span class="tag">直達優先</span><span class="tag">巴士</span><span class="tag amber">交通備案</span></div>
         </div>
       </article>
 
       <article class="stop-card" data-stop="0527-kinshicho">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>約 19:20 抵達錦糸町站</strong><span>先確認方向，再前往飯店</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -497,7 +530,6 @@
 
       <article class="stop-card" data-stop="0527-hotel">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>約 19:30 抵達 Provence Hotel</strong><span>Check-in、放行李、稍微休息</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -513,7 +545,6 @@
 
       <article class="stop-card" data-stop="0527-dinner">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>晚上 錦糸町商圈晚餐</strong><span>PARCO、丸井 OIOI、車站周邊，目標燒肉大餐</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -527,36 +558,19 @@
         </div>
       </article>
 
-      <article class="stop-card" data-stop="0527-backup">
-        <button class="stop-summary" type="button">
-          <span class="check">✓</span>
-          <span class="stop-main"><strong>備案：出關超過 18:10 不硬趕巴士</strong><span>改搭 JR／京成電車，或現場看利木津巴士</span></span>
-          <span class="toggle-icon">⌄</span>
-        </button>
-        <div class="details">
-          <div class="detail-grid">
-            <div class="detail-box"><b>判斷點</b>如果出關超過 18:10，就不要硬趕 18:15 SKYTREE Shuttle。</div>
-            <div class="detail-box"><b>替代交通</b>1. 改搭 JR／京成電車，依現場班次選擇。<br>2. 現場確認是否有利木津巴士到 Tobu Hotel Levant Tokyo 或錦糸町區域。</div>
-            <div class="detail-box"><b>提醒</b>先選最穩、最少轉乘的方式，第一天不要為了趕時間增加壓力。</div>
-          </div>
-          <div class="tag-row"><span class="tag amber">交通備案</span><span class="tag red">不要硬趕</span></div>
-        </div>
-      </article>
     </div>
   </section>
 
   <section class="day-panel" id="day-0528" data-day-panel>
     <div class="day-header">
       <div>
-        <h2 class="day-title">5/28 橫濱中華街與紅磚倉庫黃昏夜景</h2>
+        <h2 class="day-title">5/28 橫濱黃昏夜景</h2>
         <p class="day-note">主軸：中華街午餐、紅磚倉庫散步，傍晚看港未來夜景，晚上回錦糸町休息儲備體力。</p>
       </div>
-      <div class="progress" data-progress>0 / 7 完成</div>
     </div>
     <div class="cards">
       <article class="stop-card" data-stop="0528-depart">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>10:00 從錦糸町出發</strong><span>前往橫濱中華街</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -572,7 +586,6 @@
 
       <article class="stop-card" data-stop="0528-lunch">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>11:30 - 13:00 橫濱中華街午餐</strong><span>抵達後先吃飽，再慢慢逛</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -588,7 +601,6 @@
 
       <article class="stop-card" data-stop="0528-chinatown">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>13:00 - 14:00 中華街逛逛、買點心</strong><span>散步、拍照、帶一點小食</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -604,7 +616,6 @@
 
       <article class="stop-card" data-stop="0528-transfer">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>14:00 - 14:30 移動到紅磚倉庫</strong><span>從中華街往港邊移動</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -620,7 +631,6 @@
 
       <article class="stop-card" data-stop="0528-akarenga">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>14:30 - 17:30 拉麵博物館、紅磚倉庫逛店</strong><span>咖啡、休息、慢慢逛</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -636,7 +646,6 @@
 
       <article class="stop-card" data-stop="0528-nightview">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>17:30 - 19:00 黃昏、港未來夜景與晚餐</strong><span>紅磚倉庫周邊看夜景</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -652,7 +661,6 @@
 
       <article class="stop-card" data-stop="0528-return">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>19:00 - 20:30 回到錦糸町</strong><span>休息，儲備體力</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -671,15 +679,13 @@
   <section class="day-panel" id="day-0529" data-day-panel>
     <div class="day-header">
       <div>
-        <h2 class="day-title">5/29 GO Fest 主戰日：築地到臨海副都心</h2>
+        <h2 class="day-title">5/29 GO Fest主戰日</h2>
         <p class="day-note">主軸：築地早午餐、豐洲吹冷氣休息，16:00 - 20:00 進入 Park Experience 主戰。</p>
       </div>
-      <div class="progress" data-progress>0 / 10 完成</div>
     </div>
     <div class="cards">
       <article class="stop-card" data-stop="0529-ticket">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>票券狀態確認</strong><span>Park Experience 16:00 - 20:00，城市漫遊 10:00 - 20:00</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -695,7 +701,6 @@
 
       <article class="stop-card" data-stop="0529-tsukiji-depart">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>09:30 - 10:45 出發到築地市場</strong><span>上午先往築地外市場移動</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -711,7 +716,6 @@
 
       <article class="stop-card" data-stop="0529-tsukiji-brunch">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>10:45 - 12:00 築地外市場吃早午餐／壽司</strong><span>先吃飽，為下午主戰補體力</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -728,7 +732,6 @@
 
       <article class="stop-card" data-stop="0529-to-toyosu">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>12:00 - 12:45 移動到豐洲</strong><span>轉往 LaLaport 豐洲休息</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -744,7 +747,6 @@
 
       <article class="stop-card" data-stop="0529-lalaport">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>12:45 - 14:30 LaLaport 豐洲</strong><span>吹冷氣、午餐／甜點、休息、輕抓</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -760,7 +762,6 @@
 
       <article class="stop-card" data-stop="0529-yurikamome">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>14:30 - 15:15 搭百合海鷗號往台場／青海／有明</strong><span>進入臨海副都心範圍</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -776,7 +777,6 @@
 
       <article class="stop-card" data-stop="0529-prep">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>15:15 - 16:00 AQUA CITY／DiverCity／會場附近準備</strong><span>補水、廁所、整理裝備</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -792,7 +792,6 @@
 
       <article class="stop-card" data-stop="0529-gofest">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>16:00 - 20:00 GO Fest Park Experience 主戰</strong><span>臨海副都心重點時段</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -808,7 +807,6 @@
 
       <article class="stop-card" data-stop="0529-after">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>20:00 - 20:30 打超級超夢 X／Y 團體戰</strong><span>指定道館資訊待補，結束後決定晚餐與回程</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -824,7 +822,6 @@
 
       <article class="stop-card" data-stop="0529-taxi">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>計程車費預估</strong><span>台場／豐洲回錦糸町的粗估費用</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -843,15 +840,13 @@
   <section class="day-panel" id="day-0530" data-day-panel>
     <div class="day-header">
       <div>
-        <h2 class="day-title">5/30 城市漫遊券日：城市任務抓抓＋吃壽喜燒</h2>
+        <h2 class="day-title">5/30 城市任務＋壽喜燒</h2>
         <p class="day-note">主軸：10:00 - 20:00 城市漫遊券，先判斷 City District 任務區，再把壽喜燒排在順路位置。</p>
       </div>
-      <div class="progress" data-progress>0 / 9 完成</div>
     </div>
     <div class="cards">
       <article class="stop-card" data-stop="0530-ticket">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>票券狀態確認</strong><span>5/30 城市漫遊券，活動重點時段 10:00 - 20:00</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -867,7 +862,6 @@
 
       <article class="stop-card" data-stop="0530-warmup">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>09:30 - 10:00 從錦糸町出發或周邊暖身</strong><span>先進入活動節奏</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -883,7 +877,6 @@
 
       <article class="stop-card" data-stop="0530-district-check">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>10:00 - 11:00 確認 City District 任務在哪一區</strong><span>順便安排附近壽喜燒</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -899,7 +892,6 @@
 
       <article class="stop-card" data-stop="0530-sukiyaki">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>11:30 - 13:00 吃壽喜燒</strong><span>主餐先吃好，下午專心解任務</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -915,7 +907,6 @@
 
       <article class="stop-card" data-stop="0530-mission-afternoon">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>13:00 - 17:30 去任務區解 City District 任務</strong><span>下午主力解任務</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -931,7 +922,6 @@
 
       <article class="stop-card" data-stop="0530-dinner">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>17:30 - 18:30 簡單晚餐</strong><span>補體力，不排太久</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -947,7 +937,6 @@
 
       <article class="stop-card" data-stop="0530-mission-night">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>18:30 - 20:00 繼續解任務</strong><span>把剩下的 City District 收尾</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -963,7 +952,6 @@
 
       <article class="stop-card" data-stop="0530-return">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>20:00 啟程返回錦糸町</strong><span>回飯店休息</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -979,7 +967,6 @@
 
       <article class="stop-card" data-stop="0530-district-map">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>任務缺口對應方向</strong><span>依缺哪一區，決定要去哪裡補任務</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -1001,15 +988,13 @@
   <section class="day-panel" id="day-0531" data-day-panel>
     <div class="day-header">
       <div>
-        <h2 class="day-title">5/31 銀座與東京鐵塔</h2>
+        <h2 class="day-title">5/31 銀座＋東京鐵塔</h2>
         <p class="day-note">築地行程已併入 5/29，這天保留銀座散步與傍晚東京鐵塔夜景。</p>
       </div>
-      <div class="progress" data-progress>0 / 2 完成</div>
     </div>
     <div class="cards">
       <article class="stop-card" data-stop="0531-ginza">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>13:00 銀座步行者天國</strong><span>封街漫步與安全抓寶</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -1025,7 +1010,6 @@
 
       <article class="stop-card" data-stop="0531-tower">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>16:30 東京鐵塔</strong><span>日落到夜景，赤羽橋拍照點</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -1044,15 +1028,13 @@
   <section class="day-panel" id="day-0601" data-day-panel>
     <div class="day-header">
       <div>
-        <h2 class="day-title">6/1 返台日：和 Ella 早午餐＋成田回程</h2>
+        <h2 class="day-title">6/1 Ella早午餐＋返台</h2>
         <p class="day-note">上午拆開行動，中午後錦糸町會合，16:00 搭 SKYTREE Shuttle 前往成田第 2 航廈。</p>
       </div>
-      <div class="progress" data-progress>0 / 9 完成</div>
     </div>
     <div class="cards">
       <article class="stop-card" data-stop="0601-flight-info">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>航班：CI109 成田 T2 → 桃園 T2</strong><span>20:00 起飛</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -1068,7 +1050,6 @@
 
       <article class="stop-card" data-stop="0601-checkout">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>09:30 退房，行李寄放飯店</strong><span>上午拆開行動前先處理行李</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -1084,7 +1065,6 @@
 
       <article class="stop-card" data-stop="0601-allpress">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>10:00 - 11:30／12:00 Allpress Espresso 跟 Ella 早午餐</strong><span>清澄白河／木場公園附近</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -1100,7 +1080,6 @@
 
       <article class="stop-card" data-stop="0601-kinshicho-shopping">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>13:30 - 14:30 回錦糸町整理、最後採買</strong><span>中午後會合，準備返台</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -1116,7 +1095,6 @@
 
       <article class="stop-card" data-stop="0601-luggage">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>15:00 回飯店取行李，準備前往巴士站</strong><span>從 Provence Hotel 出發</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -1132,7 +1110,6 @@
 
       <article class="stop-card" data-stop="0601-bus-stop">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>15:05 - 15:15 抵達錦糸町站巴士站</strong><span>確認站牌與 16:00 班次</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -1148,7 +1125,6 @@
 
       <article class="stop-card" data-stop="0601-shuttle">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>16:00 搭 SKYTREE Shuttle 往成田</strong><span>最推薦：錦糸町直達成田第 2 航廈</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -1164,7 +1140,6 @@
 
       <article class="stop-card" data-stop="0601-checkin-flight">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>17:10 - 17:30 華航報到／托運，20:00 起飛</strong><span>CI109 返回桃園 T2</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -1180,7 +1155,6 @@
 
       <article class="stop-card" data-stop="0601-backup">
         <button class="stop-summary" type="button">
-          <span class="check">✓</span>
           <span class="stop-main"><strong>備案：JR 總武快速線直達成田機場</strong><span>擔心塞車或 SKYTREE Shuttle 滿位／停駛時使用</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
@@ -1195,40 +1169,12 @@
       </article>
     </div>
   </section>
-
-  <div class="actions">
-    <button class="action-btn" type="button" onclick="window.print()">輸出 PDF</button>
-    <button class="action-btn secondary" type="button" id="reset-progress">清除完成紀錄</button>
-  </div>
 </main>
 
 <script>
-  const storageKey = "tokyoPokeTripDoneStops";
   const tabs = document.querySelectorAll(".tab");
   const panels = document.querySelectorAll("[data-day-panel]");
   const cards = document.querySelectorAll(".stop-card");
-  const resetButton = document.getElementById("reset-progress");
-
-  function getDoneStops() {
-    try {
-      return JSON.parse(localStorage.getItem(storageKey)) || {};
-    } catch (error) {
-      return {};
-    }
-  }
-
-  function saveDoneStops(doneStops) {
-    localStorage.setItem(storageKey, JSON.stringify(doneStops));
-  }
-
-  function updateProgress() {
-    panels.forEach((panel) => {
-      const dayCards = panel.querySelectorAll(".stop-card");
-      const doneCount = panel.querySelectorAll(".stop-card.done").length;
-      const progress = panel.querySelector("[data-progress]");
-      progress.innerHTML = `<strong>${doneCount} / ${dayCards.length}</strong>完成`;
-    });
-  }
 
   function activateDay(dayId) {
     tabs.forEach((tab) => {
@@ -1242,49 +1188,16 @@
     });
   }
 
-  function restoreDoneState() {
-    const doneStops = getDoneStops();
-    cards.forEach((card) => {
-      card.classList.toggle("done", Boolean(doneStops[card.dataset.stop]));
-    });
-    updateProgress();
-  }
-
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => activateDay(tab.dataset.day));
   });
 
   cards.forEach((card) => {
     const summary = card.querySelector(".stop-summary");
-    const check = card.querySelector(".check");
-
-    summary.addEventListener("click", (event) => {
-      if (event.target === check) {
-        const doneStops = getDoneStops();
-        const stopId = card.dataset.stop;
-        doneStops[stopId] = !doneStops[stopId];
-        card.classList.toggle("done", doneStops[stopId]);
-
-        if (!doneStops[stopId]) {
-          delete doneStops[stopId];
-        }
-
-        saveDoneStops(doneStops);
-        updateProgress();
-        return;
-      }
-
+    summary.addEventListener("click", () => {
       card.classList.toggle("open");
     });
   });
-
-  resetButton.addEventListener("click", () => {
-    localStorage.removeItem(storageKey);
-    cards.forEach((card) => card.classList.remove("done"));
-    updateProgress();
-  });
-
-  restoreDoneState();
 </script>
 </body>
 </html>
