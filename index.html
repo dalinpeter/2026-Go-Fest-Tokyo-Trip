@@ -134,6 +134,11 @@
     padding: 11px;
   }
 
+  .brief-item.weather {
+    grid-column: 1 / -1;
+    background: #eef7fb;
+  }
+
   .brief-item b {
     display: block;
     margin-bottom: 4px;
@@ -145,6 +150,7 @@
     display: block;
     font-weight: 800;
     line-height: 1.45;
+    white-space: pre-line;
   }
 
   .brief-tools {
@@ -988,6 +994,10 @@
     </div>
     <h2 class="brief-title" id="brief-title">5/27 成田到錦糸町</h2>
     <div class="brief-grid">
+      <div class="brief-item weather">
+        <b>今日氣溫與攜帶物建議</b>
+        <span id="brief-weather">天氣更新中...</span>
+      </div>
       <div class="brief-item">
         <b>今天想看的風景</b>
         <span id="brief-focus">直達錦糸町、入住、晚餐商圈。</span>
@@ -2050,6 +2060,7 @@
   const lightboxClose = lightbox.querySelector(".lightbox-close");
   const briefStatus = document.getElementById("brief-status");
   const briefTitle = document.getElementById("brief-title");
+  const briefWeather = document.getElementById("brief-weather");
   const briefFocus = document.getElementById("brief-focus");
   const briefWindow = document.getElementById("brief-window");
   const briefRoute = document.getElementById("brief-route");
@@ -2143,6 +2154,35 @@
 
   const tripStart = new Date(2026, 4, 27);
   const tripEnd = new Date(2026, 5, 1);
+  const weatherPlaces = {
+    "day-0527": { name: "成田／錦糸町", latitude: 35.7101, longitude: 139.8136 },
+    "day-0528": { name: "橫濱", latitude: 35.4437, longitude: 139.6380 },
+    "day-0529": { name: "台場", latitude: 35.6267, longitude: 139.7753 },
+    "day-0530": { name: "淺草／晴空塔", latitude: 35.7148, longitude: 139.7967 },
+    "day-0531": { name: "六本木／東京鐵塔", latitude: 35.6586, longitude: 139.7454 },
+    "day-0601": { name: "清澄白河／成田", latitude: 35.6812, longitude: 139.7671 }
+  };
+  const weatherText = {
+    0: "晴朗",
+    1: "大致晴朗",
+    2: "局部多雲",
+    3: "多雲",
+    45: "有霧",
+    48: "霧氣較重",
+    51: "毛毛雨",
+    53: "毛毛雨",
+    55: "毛毛雨較明顯",
+    61: "小雨",
+    63: "雨勢普通",
+    65: "雨勢較明顯",
+    80: "短暫陣雨",
+    81: "陣雨",
+    82: "陣雨較強",
+    95: "雷雨"
+  };
+  const weatherCache = {};
+  let activeDayId = "";
+  let weatherRequestId = 0;
   const dayDateMap = {
     "day-0527": "2026-05-27",
     "day-0528": "2026-05-28",
@@ -2182,9 +2222,107 @@
     const day = tripDays[dayId];
     briefStatus.textContent = status;
     briefTitle.textContent = day.title;
+    briefWeather.textContent = "天氣更新中...";
     briefFocus.textContent = day.focus;
     briefWindow.textContent = day.window;
     briefRoute.textContent = day.route;
+    updateWeather(dayId);
+  }
+
+  function formatWeatherDate(dayId) {
+    return dayDateMap[dayId] || "2026-05-27";
+  }
+
+  function buildWeatherUrl(dayId) {
+    const place = weatherPlaces[dayId];
+    const date = formatWeatherDate(dayId);
+    const params = new URLSearchParams({
+      latitude: place.latitude,
+      longitude: place.longitude,
+      daily: "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max",
+      timezone: "Asia/Tokyo",
+      start_date: date,
+      end_date: date
+    });
+    return `https://api.open-meteo.com/v1/forecast?${params.toString()}`;
+  }
+
+  function buildCarryAdvice(maxTemp, minTemp, rainChance, placeName) {
+    const outfit = [];
+    const items = [];
+    if (maxTemp >= 28) {
+      outfit.push("短袖為主");
+    } else if (maxTemp >= 22) {
+      outfit.push("短袖或薄上衣");
+    } else {
+      outfit.push("薄長袖會比較剛好");
+    }
+
+    if (minTemp <= 20) {
+      outfit.push("加一件薄外套");
+    }
+
+    if (placeName.includes("橫濱") || placeName.includes("台場")) {
+      outfit.push("傍晚海風可加一層");
+    }
+
+    if (rainChance >= 50) {
+      items.push("帶摺疊傘");
+    } else if (rainChance >= 30) {
+      items.push("雨具看當天狀況");
+    }
+
+    return {
+      outfit: outfit.join("，") || "輕便好走的穿搭就可以",
+      items: items.join("，")
+    };
+  }
+
+  function formatWeatherSummary(dayId, data) {
+    const place = weatherPlaces[dayId];
+    const daily = data?.daily || {};
+    const maxTemp = Math.round(daily.temperature_2m_max?.[0]);
+    const minTemp = Math.round(daily.temperature_2m_min?.[0]);
+    const rainChance = Math.round(daily.precipitation_probability_max?.[0] ?? 0);
+    const code = daily.weather_code?.[0];
+
+    if (!Number.isFinite(maxTemp) || !Number.isFinite(minTemp)) {
+      throw new Error("Weather data is incomplete");
+    }
+
+    const condition = weatherText[code] || "天氣變化中";
+    const shortCondition = rainChance >= 50 ? "雨" : condition;
+    const advice = buildCarryAdvice(maxTemp, minTemp, rainChance, place.name);
+    const itemText = advice.items ? `。${advice.items}` : "";
+    return `${place.name} ${minTemp}-${maxTemp}°C｜${shortCondition} ${rainChance}%\n${advice.outfit}${itemText}`;
+  }
+
+  async function updateWeather(dayId) {
+    if (!briefWeather || !weatherPlaces[dayId]) return;
+    activeDayId = dayId;
+
+    if (weatherCache[dayId]) {
+      briefWeather.textContent = weatherCache[dayId];
+      return;
+    }
+
+    const requestId = ++weatherRequestId;
+    try {
+      const response = await fetch(buildWeatherUrl(dayId));
+      if (!response.ok) {
+        throw new Error("Weather request failed");
+      }
+      const data = await response.json();
+      const summary = formatWeatherSummary(dayId, data);
+      weatherCache[dayId] = summary;
+      if (activeDayId === dayId && requestId === weatherRequestId) {
+        briefWeather.textContent = summary;
+      }
+    } catch {
+      if (activeDayId === dayId && requestId === weatherRequestId) {
+        briefWeather.textContent = "天氣暫時無法更新，出門前看一下手機天氣。";
+      }
+    }
   }
 
   function activateDay(dayId, status = "行程檢視") {
