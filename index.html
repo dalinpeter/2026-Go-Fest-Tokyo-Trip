@@ -340,9 +340,27 @@
     padding: 11px;
   }
 
+  .stat-panel.daily {
+    border-color: rgba(47, 111, 159, 0.22);
+    background: #eef7fb;
+  }
+
+  .stat-panel.trip {
+    border-color: rgba(182, 107, 27, 0.24);
+    background: #fff6df;
+  }
+
   .stat-panel h3 {
     margin: 0 0 8px;
     font-size: 0.98rem;
+  }
+
+  .stat-panel.daily h3 {
+    color: #225f87;
+  }
+
+  .stat-panel.trip h3 {
+    color: #996015;
   }
 
   .stat-line {
@@ -1064,11 +1082,11 @@
       </form>
 
       <div class="expense-stats">
-        <div class="stat-panel">
+        <div class="stat-panel daily">
           <h3>當日統計</h3>
           <div id="daily-stats"></div>
         </div>
-        <div class="stat-panel">
+        <div class="stat-panel trip">
           <h3>整趟旅程統計</h3>
           <div id="trip-stats"></div>
         </div>
@@ -2089,16 +2107,16 @@
     "day-0528": {
       date: new Date(2026, 4, 28),
       title: "5/28 橫濱黃昏夜景",
-      focus: "櫻木町人孔蓋巡禮，中午切中華街，下午紅磚倉庫到港未來夜景。",
-      window: "11:15 櫻木町，12:45 中華街，17:30 黃昏夜景。",
-      route: "錦糸町 → 櫻木町 → Marine Tower → 橫濱中華街 → 紅磚倉庫 → 錦糸町。"
+      focus: "橫濱風景、寶可夢人孔蓋、中華美食。",
+      window: "11:15 櫻木町，17:30 港未來夜景。",
+      route: "錦糸町 → 橫濱櫻木町 → 中華街 → 紅磚倉庫。"
     },
     "day-0529": {
       date: new Date(2026, 4, 29),
       title: "5/29 GO Fest 活動日",
-      focus: "築地早午餐、豐洲午後散步，16:00 進入 Park Experience。",
-      window: "10:00 城市漫遊，16:00-20:00 Park Experience。",
-      route: "築地 → 豐洲 → 台場／青海／有明 → 錦糸町。"
+      focus: "築地、寶可夢、台場 GO Fest。",
+      window: "10:45 築地，16:00 Park Experience。",
+      route: "築地 → 豐洲 → AQUA CITY → GO Fest。"
     },
     "day-0530": {
       date: new Date(2026, 4, 30),
@@ -2110,9 +2128,9 @@
     "day-0531": {
       date: new Date(2026, 4, 31),
       title: "5/31 東京鐵塔＋森美術館",
-      focus: "上午東京鐵塔周邊拍照賞花，中午麻布台之丘，下午森美術館 Ron Mueck 展。",
-      window: "10:45 東京鐵塔周邊，12:00 麻布台之丘，16:00 森美術館。",
-      route: "錦糸町 → 赤羽橋／芝公園／增上寺 → 麻布台之丘 → 森美術館 → 六本木 Hills／錦糸町。"
+      focus: "東京鐵塔、麻布台之丘、森美術館。",
+      window: "10:45 鐵塔周邊，16:00 Ron Mueck 展。",
+      route: "錦糸町 → 東京鐵塔 → 麻布台 → 六本木。"
     },
     "day-0601": {
       date: new Date(2026, 5, 1),
