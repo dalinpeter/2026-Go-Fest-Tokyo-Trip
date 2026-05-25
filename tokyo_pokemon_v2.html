@@ -1245,12 +1245,12 @@
 
   <nav class="toolbar" aria-label="日期切換">
     <div class="tabs" role="tablist">
-      <button class="tab active" type="button" role="tab" aria-selected="true" data-day="day-0527"><strong>5/27 三</strong><span>抵達</span></button>
-      <button class="tab" type="button" role="tab" aria-selected="false" data-day="day-0528"><strong>5/28 四</strong><span>橫濱夜景</span></button>
-      <button class="tab" type="button" role="tab" aria-selected="false" data-day="day-0529"><strong>5/29 五</strong><span>GO FEST</span></button>
-      <button class="tab" type="button" role="tab" aria-selected="false" data-day="day-0530"><strong>5/30 六</strong><span>城市漫遊</span></button>
-      <button class="tab" type="button" role="tab" aria-selected="false" data-day="day-0531"><strong>5/31 日</strong><span>鐵塔 / 森美術館</span></button>
-      <button class="tab" type="button" role="tab" aria-selected="false" data-day="day-0601"><strong>6/1 一</strong><span>回程</span></button>
+      <button class="tab active" type="button" role="tab" aria-selected="true" data-day="day-0527"><strong>5/27 (三)</strong><span>出發東京</span></button>
+      <button class="tab" type="button" role="tab" aria-selected="false" data-day="day-0528"><strong>5/28 (四)</strong><span>橫濱美食+夜景</span></button>
+      <button class="tab" type="button" role="tab" aria-selected="false" data-day="day-0529"><strong>5/29 (五)</strong><span>Go Fest日!</span></button>
+      <button class="tab" type="button" role="tab" aria-selected="false" data-day="day-0530"><strong>5/30 (六)</strong><span>淺草城市漫遊</span></button>
+      <button class="tab" type="button" role="tab" aria-selected="false" data-day="day-0531"><strong>5/31 (日)</strong><span>東京散策</span></button>
+      <button class="tab" type="button" role="tab" aria-selected="false" data-day="day-0601"><strong>6/1 (一)</strong><span>準備回家</span></button>
     </div>
   </nav>
 
@@ -1264,14 +1264,13 @@
     <div class="cards">
       <article class="stop-card" data-stop="0527-airport-transfer">
         <button class="stop-summary" type="button">
-          <span class="stop-main"><strong>08:30 機場接送</strong><span>DH20260406202508</span></span>
+          <span class="stop-main"><strong>08:30 機場接送</strong><span>駕駛：吳健楠  車號：RDM-1333</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
         <div class="details">
           <div class="detail-grid">
             <div class="detail-box"><b>小記</b>搭乘機場接送，東京旅行正式開始。</div>
-            <div class="detail-box"><b>接送編號</b>DH20260406202508。</div>
-            <div class="detail-box"><b>接送資訊</b>服務駕駛：吳健楠。電話：0983-727-830。車號：RDM-1333。車款：Hyundai Staria 黑色。</div>
+            <div class="detail-box"><b>接送資訊</b>服務駕駛：吳健楠。電話：0983-727-830。車號：RDM-1333。車款：Hyundai Staria 黑色。接送編號：DH20260406202508。</div>
           </div>
         </div>
       </article>
@@ -2326,6 +2325,24 @@
     82: "陣雨較強",
     95: "雷雨"
   };
+  const weatherIcons = {
+    0: "☀",
+    1: "🌤",
+    2: "⛅",
+    3: "☁",
+    45: "🌫",
+    48: "🌫",
+    51: "🌧",
+    53: "🌧",
+    55: "🌧",
+    61: "🌧",
+    63: "🌧",
+    65: "🌧",
+    80: "🌦",
+    81: "🌧",
+    82: "🌧",
+    95: "⛈"
+  };
   const weatherCache = {};
   let activeDayId = "";
   let weatherRequestId = 0;
@@ -2412,10 +2429,12 @@
       outfit.push("傍晚海風可加一層");
     }
 
-    if (rainChance >= 50) {
-      items.push("帶摺疊傘");
-    } else if (rainChance >= 30) {
-      items.push("雨具看當天狀況");
+    if (rainChance > 90) {
+      items.push("要!帶!傘!");
+    } else if (rainChance > 60) {
+      items.push("請帶傘");
+    } else if (rainChance > 40) {
+      items.push("建議帶傘");
     }
 
     return {
@@ -2437,10 +2456,10 @@
     }
 
     const condition = weatherText[code] || "天氣變化中";
-    const shortCondition = rainChance >= 50 ? "雨" : condition;
+    const icon = weatherIcons[code] || "🌡";
     const advice = buildCarryAdvice(maxTemp, minTemp, rainChance, place.name);
     const itemText = advice.items ? `。${advice.items}` : "";
-    return `${place.name} ${minTemp}-${maxTemp}°C｜${shortCondition} ${rainChance}%\n${advice.outfit}${itemText}`;
+    return `${icon} ${place.name} ${minTemp}-${maxTemp}°C｜降雨 ${rainChance}%\n${advice.outfit}${itemText}`;
   }
 
   async function updateWeather(dayId) {
