@@ -37,6 +37,10 @@
     line-height: 1.65;
   }
 
+  body.expense-drawer-open {
+    overflow: hidden;
+  }
+
   button,
   input {
     font: inherit;
@@ -171,13 +175,76 @@
     text-decoration: none;
   }
 
+  .expense-fab {
+    position: fixed;
+    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    z-index: 70;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 48px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--night);
+    color: #fff;
+    padding: 0 18px;
+    box-shadow: 0 14px 32px rgba(26, 35, 51, 0.28);
+    font-size: 0.98rem;
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  .expense-fab::before {
+    content: "$";
+    display: inline-grid;
+    place-items: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 999px;
+    background: #ffd54a;
+    color: #8a5a08;
+    box-shadow: inset 0 -2px 0 rgba(138, 90, 8, 0.18);
+    font-size: 0.86rem;
+    font-weight: 1000;
+    line-height: 1;
+  }
+
+  .expense-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 75;
+    background: rgba(26, 35, 51, 0.38);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  body.expense-drawer-open .expense-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
   .expense-book {
-    margin: 0 0 14px;
+    position: fixed;
+    left: 50%;
+    right: auto;
+    bottom: 0;
+    z-index: 80;
+    width: min(100%, 760px);
+    max-height: min(86vh, 760px);
+    margin: 0;
     border: 1px solid var(--line);
-    border-radius: 12px;
+    border-radius: 18px 18px 0 0;
     background: rgba(255, 255, 255, 0.82);
     box-shadow: var(--soft-shadow);
     overflow: hidden;
+    transform: translate(-50%, 110%);
+    transition: transform 0.24s ease;
+  }
+
+  .expense-book[open] {
+    transform: translate(-50%, 0);
   }
 
   .expense-book summary {
@@ -186,7 +253,7 @@
     justify-content: space-between;
     gap: 12px;
     padding: 14px 16px;
-    cursor: pointer;
+    cursor: default;
     list-style: none;
   }
 
@@ -219,25 +286,48 @@
     white-space: nowrap;
   }
 
-  .expense-chevron {
+  .expense-sync {
+    border-radius: 999px;
+    background: #fff6df;
+    color: #996015;
+    padding: 5px 10px;
+    font-size: 0.78rem;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+
+  .expense-sync.synced {
+    background: #eaf5ed;
+    color: #2f6b45;
+  }
+
+  .expense-sync.error {
+    background: #fff0ec;
+    color: #a14329;
+  }
+
+  .expense-close {
     width: 30px;
     height: 30px;
+    border: 0;
     border-radius: 999px;
     display: grid;
     place-items: center;
     background: #f2eee5;
     color: var(--muted);
-  }
-
-  .expense-book[open] .expense-chevron {
-    transform: rotate(180deg);
+    font-size: 1.05rem;
+    font-weight: 900;
+    cursor: pointer;
   }
 
   .expense-body {
     display: grid;
     gap: 14px;
     border-top: 1px solid var(--line);
-    padding: 14px 16px 16px;
+    padding: 14px 16px calc(22px + env(safe-area-inset-bottom));
+    max-height: calc(min(86vh, 760px) - 62px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .expense-form {
@@ -415,6 +505,7 @@
   }
 
   .expense-category {
+    min-width: 0;
     border-radius: 999px;
     background: #fff5df;
     color: #996015;
@@ -431,8 +522,10 @@
   }
 
   .expense-amount {
+    min-width: 0;
     font-size: 1.05rem;
     font-weight: 900;
+    text-align: right;
   }
 
   .expense-item p {
@@ -792,15 +885,30 @@
     }
 
     .expense-book summary {
+      flex-wrap: wrap;
       padding: 12px;
+    }
+
+    .expense-title {
+      flex: 1 1 calc(100% - 44px);
     }
 
     .expense-date-pill {
+      order: 3;
       margin-left: 0;
     }
 
+    .expense-sync {
+      order: 4;
+      margin-left: 0;
+    }
+
+    .expense-close {
+      margin-left: auto;
+    }
+
     .expense-body {
-      padding: 12px;
+      padding: 12px 12px calc(24px + env(safe-area-inset-bottom));
     }
 
     .expense-grid,
@@ -822,6 +930,31 @@
       flex: 1 1 78px;
       justify-content: center;
       min-height: 44px;
+    }
+
+    .expense-item {
+      padding: 12px 12px 14px;
+    }
+
+    .expense-item-top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: start;
+      gap: 7px;
+    }
+
+    .expense-category.is-note {
+      max-width: 100%;
+    }
+
+    .expense-amount {
+      width: 100%;
+      text-align: left;
+      line-height: 1.35;
+    }
+
+    .expense-item-actions {
+      margin-top: 12px;
     }
 
     .toolbar {
@@ -1013,13 +1146,17 @@
     </div>
   </section>
 
+  <button class="expense-fab" type="button" id="expense-fab" aria-controls="expense-book" aria-expanded="false">記帳</button>
+  <div class="expense-backdrop" id="expense-backdrop" aria-hidden="true"></div>
+
   <details class="expense-book" id="expense-book">
     <summary>
       <span class="expense-title">
         <strong>旅行記帳</strong>
       </span>
       <span class="expense-date-pill" id="expense-date-pill">5/27 三</span>
-      <span class="expense-chevron">⌄</span>
+      <span class="expense-sync" id="expense-sync-status">本機保存</span>
+      <button class="expense-close" type="button" id="expense-close" aria-label="關閉記帳">×</button>
     </summary>
     <div class="expense-body">
       <form class="expense-form" id="expense-form">
@@ -2067,9 +2204,14 @@
   const openCardsKey = "tokyoTripOpenCards";
   const expensesKey = "tokyoTripExpenses";
   const exchangeRateKey = "tokyoTripExchangeRate";
+  const cloudSyncUrl = "https://script.google.com/macros/s/AKfycbz5OOj-zGxIiDVF-GezuBBMvwQUKdTsJI0IDjhtq7msjTZ1hiuJJMiQjKW9ZgMuKuT9/exec";
   const tripMembers = ["柔", "謙", "雪"];
   const memoryStorage = {};
+  const expenseFab = document.getElementById("expense-fab");
+  const expenseBackdrop = document.getElementById("expense-backdrop");
   const expenseBook = document.getElementById("expense-book");
+  const expenseSummary = expenseBook.querySelector("summary");
+  const expenseClose = document.getElementById("expense-close");
   const expenseForm = document.getElementById("expense-form");
   const expenseDate = document.getElementById("expense-date");
   const expenseCategory = document.getElementById("expense-category");
@@ -2086,8 +2228,11 @@
   const tripStats = document.getElementById("trip-stats");
   const expenseList = document.getElementById("expense-list");
   const expenseDatePill = document.getElementById("expense-date-pill");
+  const expenseSyncStatus = document.getElementById("expense-sync-status");
   let expenses = [];
   let editingExpenseId = null;
+  let syncTimer = null;
+  let isSyncingExpenses = false;
 
   function readStored(key, fallback = "") {
     try {
@@ -2352,6 +2497,18 @@
     expenseDatePill.textContent = dateLabelMap[expenseDate.value] || expenseDate.value;
   }
 
+  function openExpenseDrawer() {
+    expenseBook.open = true;
+    document.body.classList.add("expense-drawer-open");
+    expenseFab.setAttribute("aria-expanded", "true");
+  }
+
+  function closeExpenseDrawer() {
+    expenseBook.open = false;
+    document.body.classList.remove("expense-drawer-open");
+    expenseFab.setAttribute("aria-expanded", "false");
+  }
+
   function buildCardPreviews() {
     cards.forEach((card) => {
       if (card.querySelector(".card-preview-meta")) return;
@@ -2464,7 +2621,8 @@
       payer: tripMembers.includes(raw.payer) ? raw.payer : "",
       note: raw.note || "",
       createdAt: raw.createdAt || new Date().toISOString(),
-      updatedAt: raw.updatedAt || raw.createdAt || new Date().toISOString()
+      updatedAt: raw.updatedAt || raw.createdAt || new Date().toISOString(),
+      deleted: raw.deleted === true || raw.deleted === "TRUE"
     };
   }
 
@@ -2475,12 +2633,92 @@
     } catch {
       saved = [];
     }
-    expenses = Array.isArray(saved) ? saved.map(normalizeExpense) : [];
+    expenses = Array.isArray(saved) ? saved.map(normalizeExpense).filter((expense) => !expense.deleted) : [];
     saveExpenses();
   }
 
   function saveExpenses() {
     writeStored(expensesKey, JSON.stringify(expenses));
+  }
+
+  function setSyncStatus(text, state = "") {
+    if (!expenseSyncStatus) return;
+    expenseSyncStatus.textContent = text;
+    expenseSyncStatus.classList.toggle("synced", state === "synced");
+    expenseSyncStatus.classList.toggle("error", state === "error");
+  }
+
+  function expenseTimestamp(expense) {
+    return Date.parse(expense.updatedAt || expense.createdAt || "") || 0;
+  }
+
+  function mergeExpenses(localItems, cloudItems) {
+    const byId = new Map();
+    [...localItems, ...cloudItems].forEach((item) => {
+      const expense = normalizeExpense(item);
+      const current = byId.get(expense.id);
+      if (!current || expenseTimestamp(expense) >= expenseTimestamp(current)) {
+        byId.set(expense.id, expense);
+      }
+    });
+
+    return [...byId.values()]
+      .filter((expense) => !expense.deleted)
+      .sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+  }
+
+  async function loadCloudExpenses() {
+    if (!cloudSyncUrl) return;
+    setSyncStatus("同步中...");
+    try {
+      const response = await fetch(`${cloudSyncUrl}?t=${Date.now()}`, { cache: "no-store" });
+      if (!response.ok) throw new Error("Cloud load failed");
+      const data = await response.json();
+      const cloudExpenses = Array.isArray(data.expenses)
+        ? data.expenses.map(normalizeExpense).filter((expense) => !expense.deleted)
+        : [];
+
+      if (cloudExpenses.length) {
+        expenses = mergeExpenses(expenses, cloudExpenses);
+        saveExpenses();
+        renderExpenses();
+      }
+
+      setSyncStatus("已同步", "synced");
+      if (expenses.length) {
+        syncExpensesToCloud();
+      }
+    } catch {
+      setSyncStatus("本機保存，雲端稍後再同步", "error");
+    }
+  }
+
+  async function syncExpensesToCloud() {
+    if (!cloudSyncUrl || isSyncingExpenses) return;
+    isSyncingExpenses = true;
+    setSyncStatus("同步中...");
+    try {
+      const response = await fetch(cloudSyncUrl, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ action: "sync", expenses })
+      });
+      if (!response.ok) throw new Error("Cloud sync failed");
+      const result = await response.json();
+      if (!result.ok) throw new Error("Cloud sync rejected");
+      setSyncStatus("已同步", "synced");
+    } catch {
+      setSyncStatus("本機保存，雲端稍後再同步", "error");
+    } finally {
+      isSyncingExpenses = false;
+    }
+  }
+
+  function scheduleCloudSync() {
+    if (!cloudSyncUrl) return;
+    setSyncStatus("等待同步...");
+    window.clearTimeout(syncTimer);
+    syncTimer = window.setTimeout(syncExpensesToCloud, 600);
   }
 
   function loadExchangeRate() {
@@ -2628,7 +2866,7 @@
     if (!expense) return;
 
     editingExpenseId = id;
-    expenseBook.open = true;
+    openExpenseDrawer();
     expenseDate.value = expense.date;
     expenseCategory.value = expense.category;
     expenseAmount.value = expense.amount;
@@ -2647,6 +2885,7 @@
     if (!confirm("要刪除這筆花費嗎？")) return;
     expenses = expenses.filter((expense) => expense.id !== id);
     saveExpenses();
+    scheduleCloudSync();
     renderExpenses();
   }
 
@@ -2660,6 +2899,13 @@
       card.classList.toggle("open");
       saveOpenCards();
     });
+  });
+
+  expenseFab.addEventListener("click", openExpenseDrawer);
+  expenseBackdrop.addEventListener("click", closeExpenseDrawer);
+  expenseClose.addEventListener("click", closeExpenseDrawer);
+  expenseSummary.addEventListener("click", (event) => {
+    event.preventDefault();
   });
 
   expenseForm.addEventListener("submit", (event) => {
@@ -2698,6 +2944,7 @@
     }
 
     saveExpenses();
+    scheduleCloudSync();
     expenseMessage.textContent = editingExpenseId ? "已更新花費" : "已新增花費";
     resetExpenseForm(nextExpense.date);
     updateExpenseDateDisplay();
@@ -2739,6 +2986,10 @@
   });
 
   document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && document.body.classList.contains("expense-drawer-open")) {
+      closeExpenseDrawer();
+      return;
+    }
     if (event.key === "Escape" && lightbox.classList.contains("open")) {
       closeLightbox();
     }
@@ -2753,6 +3004,7 @@
   setSelectedMembers(tripMembers);
   const initialDay = dayIdForToday();
   activateDay(initialDay.dayId, initialDay.status);
+  loadCloudExpenses();
 </script>
 </body>
 </html>
