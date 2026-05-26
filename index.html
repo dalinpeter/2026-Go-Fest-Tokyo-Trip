@@ -771,6 +771,17 @@
     margin-top: 12px;
   }
 
+  .map-actions.stacked-links {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .map-action-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
   .place-link {
     display: inline-flex;
     align-items: center;
@@ -1125,7 +1136,7 @@
       <p class="brief-kicker">今日旅行小記</p>
       <span class="brief-status" id="brief-status">今日行程</span>
     </div>
-    <h2 class="brief-title" id="brief-title">5/27 成田到錦糸町</h2>
+    <h2 class="brief-title" id="brief-title">5/27 成田到錦系町</h2>
     <div class="brief-grid">
       <div class="brief-item weather">
         <b>今日氣溫與攜帶物建議</b>
@@ -1133,7 +1144,7 @@
       </div>
       <div class="brief-item">
         <b>今天想看的風景</b>
-        <span id="brief-focus">直達錦糸町、入住、晚餐商圈。</span>
+        <span id="brief-focus">直達錦系町、入住、晚餐商圈。</span>
       </div>
       <div class="brief-item">
         <b>關鍵時段</b>
@@ -1141,7 +1152,7 @@
       </div>
       <div class="brief-item">
         <b>主要動線</b>
-        <span id="brief-route">成田 T2 → 錦糸町 → Provence Hotel。</span>
+        <span id="brief-route">成田 T2 → 錦系町 → Provence Hotel。</span>
       </div>
     </div>
   </section>
@@ -1257,8 +1268,8 @@
   <section class="day-panel active" id="day-0527" data-day-panel>
     <div class="day-header">
       <div>
-        <h2 class="day-title">5/27 成田到錦糸町</h2>
-        <p class="day-note">今天路線：直達錦糸町、入住、晚餐，晚上逛逛車站商圈。</p>
+        <h2 class="day-title">5/27 成田到錦系町</h2>
+        <p class="day-note">今天路線：直達錦系町、入住、晚餐，晚上逛逛車站商圈。</p>
       </div>
     </div>
     <div class="cards">
@@ -1319,7 +1330,7 @@
         <div class="details">
           <div class="detail-grid">
             <div class="detail-box"><b>小記</b>抵達成田第 2 航廈後，完成下機、入境動線和行李領取。</div>
-            <div class="detail-box"><b>交通</b>目標是後續接 SKYTREE Shuttle 往錦糸町。</div>
+            <div class="detail-box"><b>交通</b>目標是後續接 SKYTREE Shuttle 往錦系町。</div>
           </div>
           <div class="map-actions">
             <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Narita%20Airport%20Terminal%202" target="_blank" rel="noopener">成田 T2</a>
@@ -1342,31 +1353,40 @@
 
       <article class="stop-card" data-stop="0527-shuttle">
         <button class="stop-summary" type="button">
-          <span class="stop-main"><strong>18:15 搭 SKYTREE Shuttle 往錦糸町</strong><span>成田 T2 出發</span></span>
+          <span class="stop-main"><strong>18:15 搭 SKYTREE Shuttle 往錦系町</strong><span>成田 T2 出發</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
         <div class="details">
           <div class="detail-grid">
-            <div class="detail-box"><b>小記</b>直達錦糸町最省事，第一天拖行李也比較輕鬆。</div>
-            <div class="detail-box"><b>交通</b>搭 SKYTREE Shuttle，目標直達錦糸町區域。</div>
+            <div class="detail-box"><b>小記</b>直達錦系町最省事，第一天拖行李也比較輕鬆。</div>
+            <div class="detail-box"><b>交通</b>搭 SKYTREE Shuttle，目標直達錦系町區域。</div>
             <div class="detail-box"><b>交通選項</b>如果出關超過 18:10，可以改搭其他交通，不必卡 18:15 SKYTREE Shuttle。</div>
-            <div class="detail-box"><b>替代交通</b>1. 改搭 JR／京成電車，依現場班次選擇。<br>2. 現場確認是否有利木津巴士到 Tobu Hotel Levant Tokyo 或錦糸町區域。</div>
+            <div class="detail-box"><b>替代交通</b>1. 改搭 JR／京成電車，依現場班次選擇。<br>2. 現場確認是否有利木津巴士到 Tobu Hotel Levant Tokyo 或錦系町區域。</div>
+          </div>
+          <div class="map-actions stacked-links">
+            <div class="map-action-row">
+              <a class="place-link" href="https://share.google/QUfFDGyrLqF20O1MW" target="_blank" rel="noopener">預約 SKYTREE Shuttle</a>
+            </div>
+            <div class="map-action-row">
+              <a class="place-link" href="https://www.limousinebus.co.jp/zh-tw/timetable/detail/Narita-KinshichoToyochoAsakusa/?dir=1&amp;d=2026-05-27" target="_blank" rel="noopener">利木津巴士：往錦系町</a>
+              <a class="place-link" href="https://www.limousinebus.co.jp/ja/timetable/detail/Narita-TCAT/?dir=1" target="_blank" rel="noopener">利木津巴士：往東京City</a>
+            </div>
           </div>
         </div>
       </article>
 
       <article class="stop-card" data-stop="0527-kinshicho">
         <button class="stop-summary" type="button">
-          <span class="stop-main"><strong>19:20 抵達錦糸町站</strong><span>先確認方向，再前往飯店</span></span>
+          <span class="stop-main"><strong>19:20 抵達錦系町站</strong><span>先確認方向，再前往飯店</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
         <div class="details">
           <div class="detail-grid">
             <div class="detail-box"><b>小記</b>抵達後先整理行李，接著往飯店移動。</div>
-            <div class="detail-box"><b>交通</b>從錦糸町站前往 Provence Hotel。</div>
+            <div class="detail-box"><b>交通</b>從錦系町站前往 Provence Hotel。</div>
           </div>
           <div class="map-actions">
-            <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Kinshicho%20Station%20Tokyo" target="_blank" rel="noopener">錦糸町站</a>
+            <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Kinshicho%20Station%20Tokyo" target="_blank" rel="noopener">錦系町站</a>
           </div>
         </div>
       </article>
@@ -1388,12 +1408,12 @@
 
       <article class="stop-card" data-stop="0527-dinner">
         <button class="stop-summary" type="button">
-          <span class="stop-main"><strong>晚上 錦糸町商圈晚餐</strong><span>ARCAKIT 錦糸町、PARCO、丸井 OIOI、車站周邊</span></span>
+          <span class="stop-main"><strong>晚上 錦系町商圈晚餐</strong><span>ARCAKIT 錦系町、PARCO、丸井 OIOI、車站周邊</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
         <div class="details">
           <div class="detail-grid">
-            <div class="detail-box"><b>晚餐選手</b>焼肉ここから 錦糸町本店、マグロと炉端成る。</div>
+            <div class="detail-box"><b>晚餐選手</b>焼肉ここから 錦系町本店、マグロと炉端成る。</div>
             <div class="detail-box"><b>預計要逛</b>3COINS、Workman Girl、西友超商。</div>
           </div>
           <div class="map-actions">
@@ -1402,7 +1422,7 @@
             <a class="place-link" href="https://maps.app.goo.gl/ravdpY8HWqESooBPA" target="_blank" rel="noopener">3COINS</a>
             <a class="place-link" href="https://maps.app.goo.gl/L44zUq65c35H5NFy8" target="_blank" rel="noopener">Workman Girl</a>
             <a class="place-link" href="https://maps.app.goo.gl/wh4cJoehETkx7WkN7" target="_blank" rel="noopener">西友超商</a>
-            <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Arcakit%20Kinshicho" target="_blank" rel="noopener">ARCAKIT 錦糸町</a>
+            <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Arcakit%20Kinshicho" target="_blank" rel="noopener">ARCAKIT 錦系町</a>
           </div>
         </div>
       </article>
@@ -1420,12 +1440,12 @@
     <div class="cards">
       <article class="stop-card" data-stop="0528-depart">
         <button class="stop-summary" type="button">
-          <span class="stop-main"><strong>10:00 錦糸町往櫻木町</strong><span>前往橫濱港未來區域</span></span>
+          <span class="stop-main"><strong>10:00 錦系町往櫻木町</strong><span>前往橫濱港未來區域</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
         <div class="details">
           <div class="detail-grid">
-            <div class="detail-box"><b>小記</b>從錦糸町出發前往櫻木町，先進入港未來一帶。</div>
+            <div class="detail-box"><b>小記</b>從錦系町出發前往櫻木町，先進入港未來一帶。</div>
             <div class="detail-box"><b>交通</b>依當天班次選擇最順的電車路線，目標 11:15 抵達櫻木町。</div>
           </div>
         </div>
@@ -1562,12 +1582,12 @@
 
       <article class="stop-card" data-stop="0528-return">
         <button class="stop-summary" type="button">
-          <span class="stop-main"><strong>20:00 - 20:30 回到錦糸町</strong><span>結束橫濱日，回飯店休息</span></span>
+          <span class="stop-main"><strong>20:00 - 20:30 回到錦系町</strong><span>結束橫濱日，回飯店休息</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
         <div class="details">
           <div class="detail-grid">
-            <div class="detail-box"><b>小記</b>20:00 後啟程回錦糸町，結束橫濱日。</div>
+            <div class="detail-box"><b>小記</b>20:00 後啟程回錦系町，結束橫濱日。</div>
             <div class="detail-box"><b>交通</b>依當天狀況選最少轉乘、最舒服的路線回飯店。</div>
           </div>
         </div>
@@ -1741,14 +1761,14 @@
 
       <article class="stop-card" data-stop="0529-taxi">
         <button class="stop-summary" type="button">
-          <span class="stop-main"><strong>計程車費預估</strong><span>台場／豐洲回錦糸町的粗估費用</span></span>
+          <span class="stop-main"><strong>計程車費預估</strong><span>台場／豐洲回錦系町的粗估費用</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
         <div class="details">
           <div class="detail-grid">
-            <div class="detail-box"><b>台場直接回錦糸町</b>約 ¥6,000 - ¥8,000。</div>
-            <div class="detail-box"><b>台場搭百合海鷗號到豐洲，再計程車回錦糸町</b>計程車約 ¥3,500 - ¥5,000。</div>
-            <div class="detail-box"><b>22:00 後豐洲回錦糸町</b>約 ¥4,500 - ¥6,000。</div>
+            <div class="detail-box"><b>台場直接回錦系町</b>約 ¥6,000 - ¥8,000。</div>
+            <div class="detail-box"><b>台場搭百合海鷗號到豐洲，再計程車回錦系町</b>計程車約 ¥3,500 - ¥5,000。</div>
+            <div class="detail-box"><b>22:00 後豐洲回錦系町</b>約 ¥4,500 - ¥6,000。</div>
           </div>
         </div>
       </article>
@@ -1778,12 +1798,12 @@
 
       <article class="stop-card" data-stop="0530-warmup">
         <button class="stop-summary" type="button">
-          <span class="stop-main"><strong>09:30 - 10:15 出發去淺草</strong><span>從錦糸町往淺草移動</span></span>
+          <span class="stop-main"><strong>09:30 - 10:15 出發去淺草</strong><span>從錦系町往淺草移動</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
         <div class="details">
           <div class="detail-grid">
-            <div class="detail-box"><b>小記</b>從錦糸町出發去淺草，開始城市漫遊券日。</div>
+            <div class="detail-box"><b>小記</b>從錦系町出發去淺草，開始城市漫遊券日。</div>
             <div class="detail-box"><b>交通</b>依當天最順路線前往淺草，抵達後銜接周邊散步抓抓。</div>
           </div>
           <div class="map-actions">
@@ -1880,7 +1900,7 @@
         <div class="details">
           <div class="detail-grid">
             <div class="detail-box"><b>小記</b>晴空塔周邊晚餐，並抓到活動結束。</div>
-            <div class="detail-box"><b>安排</b>以商場與晴空塔周邊為主，活動結束後再回錦糸町。</div>
+            <div class="detail-box"><b>安排</b>以商場與晴空塔周邊為主，活動結束後再回錦系町。</div>
           </div>
           <div class="map-actions">
             <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Tokyo%20Skytree%20Town" target="_blank" rel="noopener">東京晴空塔城</a>
@@ -1917,12 +1937,12 @@
     <div class="cards">
       <article class="stop-card" data-stop="0531-depart">
         <button class="stop-summary" type="button">
-          <span class="stop-main"><strong>10:00 錦糸町出發</strong><span>前往東京鐵塔周邊</span></span>
+          <span class="stop-main"><strong>10:00 錦系町出發</strong><span>前往東京鐵塔周邊</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
         <div class="details">
           <div class="detail-grid">
-            <div class="detail-box"><b>小記</b>從錦糸町出發，目標赤羽橋、芝公園、增上寺一帶。</div>
+            <div class="detail-box"><b>小記</b>從錦系町出發，目標赤羽橋、芝公園、增上寺一帶。</div>
             <div class="detail-box"><b>動線</b>先到東京鐵塔周邊拍照，再銜接麻布台之丘午餐。</div>
           </div>
         </div>
@@ -2014,17 +2034,17 @@
 
       <article class="stop-card" data-stop="0531-dinner">
         <button class="stop-summary" type="button">
-          <span class="stop-main"><strong>18:00 - 20:00 六本木 Hills 吃晚餐或回錦糸町晚餐</strong><span>看當天心情決定晚餐地點</span></span>
+          <span class="stop-main"><strong>18:00 - 20:00 六本木 Hills 吃晚餐或回錦系町晚餐</strong><span>看當天心情決定晚餐地點</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
         <div class="details">
           <div class="detail-grid">
-            <div class="detail-box"><b>小記</b>看展後在六本木 Hills 吃晚餐，或直接回錦糸町吃比較輕鬆。</div>
-            <div class="detail-box"><b>晚餐</b>依當天心情選六本木或錦糸町。</div>
+            <div class="detail-box"><b>小記</b>看展後在六本木 Hills 吃晚餐，或直接回錦系町吃比較輕鬆。</div>
+            <div class="detail-box"><b>晚餐</b>依當天心情選六本木或錦系町。</div>
           </div>
           <div class="map-actions">
             <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Roppongi%20Hills" target="_blank" rel="noopener">六本木 Hills</a>
-            <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Kinshicho%20Station%20Tokyo" target="_blank" rel="noopener">錦糸町</a>
+            <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Kinshicho%20Station%20Tokyo" target="_blank" rel="noopener">錦系町</a>
           </div>
         </div>
       </article>
@@ -2035,7 +2055,7 @@
     <div class="day-header">
       <div>
         <h2 class="day-title">6/1 Ella早午餐＋返台</h2>
-        <p class="day-note">上午拆開行動，中午後錦糸町會合，16:00 搭 SKYTREE Shuttle 前往成田第 2 航廈。</p>
+        <p class="day-note">上午拆開行動，中午後錦系町會合，16:00 搭 SKYTREE Shuttle 前往成田第 2 航廈。</p>
       </div>
     </div>
     <div class="cards">
@@ -2073,7 +2093,7 @@
           <div class="detail-grid">
             <div class="detail-box"><b>地點</b>Allpress Espresso Tokyo Roastery & Cafe。</div>
             <div class="detail-box"><b>區域</b>清澄白河／木場公園附近。</div>
-            <div class="detail-box"><b>小記</b>和 Ella 吃早午餐、喝咖啡，12:00 左右往錦糸町方向移動。</div>
+            <div class="detail-box"><b>小記</b>和 Ella 吃早午餐、喝咖啡，12:00 左右往錦系町方向移動。</div>
           </div>
           <div class="map-actions">
             <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Allpress%20Espresso%20Tokyo%20Roastery%20%26%20Cafe" target="_blank" rel="noopener">Allpress Espresso</a>
@@ -2083,12 +2103,12 @@
 
       <article class="stop-card" data-stop="0601-kinshicho-shopping">
         <button class="stop-summary" type="button">
-          <span class="stop-main"><strong>13:30 - 14:30 回錦糸町整理、最後採買</strong><span>中午後會合，準備返台</span></span>
+          <span class="stop-main"><strong>13:30 - 14:30 回錦系町整理、最後採買</strong><span>中午後會合，準備返台</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
         <div class="details">
           <div class="detail-grid">
-            <div class="detail-box"><b>小記</b>回到錦糸町整理買到的東西，補最後缺的藥妝或伴手禮。</div>
+            <div class="detail-box"><b>小記</b>回到錦系町整理買到的東西，補最後缺的藥妝或伴手禮。</div>
             <div class="detail-box"><b>時間</b>只排 1 小時，避免返程前太趕。</div>
           </div>
         </div>
@@ -2102,7 +2122,7 @@
         <div class="details">
           <div class="detail-grid">
             <div class="detail-box"><b>小記</b>回 Provence Hotel 取行李，準備前往巴士站。</div>
-            <div class="detail-box"><b>動線</b>15:00 從飯店出發往錦糸町站巴士站。</div>
+            <div class="detail-box"><b>動線</b>15:00 從飯店出發往錦系町站巴士站。</div>
           </div>
           <div class="map-actions">
             <a class="place-link" href="https://www.google.com/maps/search/?api=1&query=Provence%20Hotel%20Kinshicho%20Tokyo" target="_blank" rel="noopener">Provence Hotel</a>
@@ -2112,26 +2132,26 @@
 
       <article class="stop-card" data-stop="0601-bus-stop">
         <button class="stop-summary" type="button">
-          <span class="stop-main"><strong>15:05 - 15:15 抵達錦糸町站巴士站</strong><span>確認站牌與 16:00 班次</span></span>
+          <span class="stop-main"><strong>15:05 - 15:15 抵達錦系町站巴士站</strong><span>確認站牌與 16:00 班次</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
         <div class="details">
           <div class="detail-grid">
             <div class="detail-box"><b>小記</b>抵達巴士站後確認站牌、排隊位置和前往成田第 2 航廈的班次。</div>
             <div class="detail-box"><b>時間</b>15:15 前到站，讓 16:00 巴士有充足緩衝。</div>
-            <div class="detail-box"><b>交通選項</b>若擔心塞車，或現場顯示 SKYTREE Shuttle 滿位／停駛，可改用 JR 總武快速線從錦糸町直達成田機場。</div>
+            <div class="detail-box"><b>交通選項</b>若擔心塞車，或現場顯示 SKYTREE Shuttle 滿位／停駛，可改用 JR 總武快速線從錦系町直達成田機場。</div>
           </div>
         </div>
       </article>
 
       <article class="stop-card" data-stop="0601-shuttle">
         <button class="stop-summary" type="button">
-          <span class="stop-main"><strong>16:00 搭 SKYTREE Shuttle 往成田</strong><span>最推薦：錦糸町直達成田第 2 航廈</span></span>
+          <span class="stop-main"><strong>16:00 搭 SKYTREE Shuttle 往成田</strong><span>最推薦：錦系町直達成田第 2 航廈</span></span>
           <span class="toggle-icon">⌄</span>
         </button>
         <div class="details">
           <div class="detail-grid">
-            <div class="detail-box"><b>最推薦</b>16:00 從錦糸町搭 SKYTREE Shuttle 到成田第 2 航廈。</div>
+            <div class="detail-box"><b>最推薦</b>16:00 從錦系町搭 SKYTREE Shuttle 到成田第 2 航廈。</div>
             <div class="detail-box"><b>抵達</b>預計 17:03 抵達成田第 2 航廈。</div>
           </div>
         </div>
@@ -2254,17 +2274,17 @@
   const tripDays = {
     "day-0527": {
       date: new Date(2026, 4, 27),
-      title: "5/27 成田到錦糸町",
-      focus: "機場出發、飛往東京，抵達後直達錦糸町入住。",
+      title: "5/27 成田到錦系町",
+      focus: "機場出發、飛往東京，抵達後直達錦系町入住。",
       window: "08:30 機場接送，12:15 起飛，16:35 抵達。",
-      route: "台灣機場 → 成田 T2 → 錦糸町 → Provence Hotel。"
+      route: "台灣機場 → 成田 T2 → 錦系町 → Provence Hotel。"
     },
     "day-0528": {
       date: new Date(2026, 4, 28),
       title: "5/28 橫濱黃昏夜景",
       focus: "橫濱風景、寶可夢人孔蓋、中華美食。",
       window: "11:15 櫻木町，17:30 港未來夜景。",
-      route: "錦糸町 → 橫濱櫻木町 → 中華街 → 紅磚倉庫。"
+      route: "錦系町 → 橫濱櫻木町 → 中華街 → 紅磚倉庫。"
     },
     "day-0529": {
       date: new Date(2026, 4, 29),
@@ -2278,28 +2298,28 @@
       title: "5/30 城市漫遊＋壽喜燒",
       focus: "淺草出發吃 Chinya 壽喜燒，下午切上野，傍晚到晴空塔收尾。",
       window: "09:30 淺草出發，11:00 Chinya，17:00-20:00 晴空塔收尾。",
-      route: "錦糸町 → 淺草 → 上野阿美橫町 → 晴空塔 → 錦糸町。"
+      route: "錦系町 → 淺草 → 上野阿美橫町 → 晴空塔 → 錦系町。"
     },
     "day-0531": {
       date: new Date(2026, 4, 31),
       title: "5/31 東京鐵塔＋森美術館",
       focus: "東京鐵塔、麻布台之丘、森美術館。",
       window: "10:45 鐵塔周邊，16:00 Ron Mueck 展。",
-      route: "錦糸町 → 東京鐵塔 → 麻布台 → 六本木。"
+      route: "錦系町 → 東京鐵塔 → 麻布台 → 六本木。"
     },
     "day-0601": {
       date: new Date(2026, 5, 1),
       title: "6/1 Ella早午餐＋返台",
-      focus: "上午 Allpress，下午錦糸町收束，晚間飛回台灣。",
+      focus: "上午 Allpress，下午錦系町收束，晚間飛回台灣。",
       window: "10:00 Allpress，16:00 成田交通，20:00-22:45 返台航程。",
-      route: "清澄白河／木場公園 → 錦糸町 → 成田 T2 → 台灣。"
+      route: "清澄白河／木場公園 → 錦系町 → 成田 T2 → 台灣。"
     }
   };
 
   const tripStart = new Date(2026, 4, 27);
   const tripEnd = new Date(2026, 5, 1);
   const weatherPlaces = {
-    "day-0527": { name: "成田／錦糸町", latitude: 35.7101, longitude: 139.8136 },
+    "day-0527": { name: "成田／錦系町", latitude: 35.7101, longitude: 139.8136 },
     "day-0528": { name: "橫濱", latitude: 35.4437, longitude: 139.6380 },
     "day-0529": { name: "台場", latitude: 35.6267, longitude: 139.7753 },
     "day-0530": { name: "淺草／晴空塔", latitude: 35.7148, longitude: 139.7967 },
