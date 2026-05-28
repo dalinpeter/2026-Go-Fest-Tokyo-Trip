@@ -2644,6 +2644,38 @@
     });
   }
 
+  function formatTokyoDate(date) {
+    const parts = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Tokyo",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    }).formatToParts(date);
+    const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+    return `${values.year}-${values.month}-${values.day}`;
+  }
+
+  function normalizeExpenseDate(value) {
+    if (!value) return "2026-05-27";
+
+    if (value instanceof Date && !Number.isNaN(value.getTime())) {
+      return formatTokyoDate(value);
+    }
+
+    const text = String(value).trim();
+    const dateOnly = text.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/);
+    if (dateOnly) {
+      return `${dateOnly[1]}-${dateOnly[2].padStart(2, "0")}-${dateOnly[3].padStart(2, "0")}`;
+    }
+
+    const parsed = new Date(text);
+    if (!Number.isNaN(parsed.getTime())) {
+      return formatTokyoDate(parsed);
+    }
+
+    return "2026-05-27";
+  }
+
   function normalizeExpense(raw) {
     const amount = Math.round(Number(raw.amount || raw.total || 0));
     const members = Array.isArray(raw.members) && raw.members.length
@@ -2652,7 +2684,7 @@
 
     return {
       id: raw.id || `expense-${Date.now()}-${Math.random().toString(16).slice(2)}`,
-      date: raw.date || raw.day || "2026-05-27",
+      date: normalizeExpenseDate(raw.date || raw.day),
       category: raw.category || "其他",
       amount,
       currency: raw.currency === "TWD" ? "TWD" : "JPY",
